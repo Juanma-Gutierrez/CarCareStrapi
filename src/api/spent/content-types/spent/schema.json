@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "spents",
+  "info": {
+    "singularName": "spent",
+    "pluralName": "spents",
+    "displayName": "spent",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "date": {
+      "type": "date"
+    },
+    "amount": {
+      "type": "decimal"
+    },
+    "observations": {
+      "type": "text"
+    },
+    "provider": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::provider.provider",
+      "inversedBy": "spents"
+    },
+    "service": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::service.service",
+      "inversedBy": "spents"
+    },
+    "vehicle": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::vehicle.vehicle",
+      "inversedBy": "spents"
+    }
+  }
+}

@@ -482,6 +482,50 @@ export interface PluginUploadFolder extends Schema.CollectionType {
   };
 }
 
+export interface PluginI18NLocale extends Schema.CollectionType {
+  collectionName: 'i18n_locale';
+  info: {
+    singularName: 'locale';
+    pluralName: 'locales';
+    collectionName: 'locales';
+    displayName: 'Locale';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.SetMinMax<{
+        min: 1;
+        max: 50;
+      }>;
+    code: Attribute.String & Attribute.Unique;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUsersPermissionsPermission
   extends Schema.CollectionType {
   collectionName: 'up_permissions';
@@ -616,6 +660,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    owner: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToOne',
+      'api::owner.owner'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -633,43 +682,211 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
-export interface PluginI18NLocale extends Schema.CollectionType {
-  collectionName: 'i18n_locale';
+export interface ApiOwnerOwner extends Schema.CollectionType {
+  collectionName: 'owners';
   info: {
-    singularName: 'locale';
-    pluralName: 'locales';
-    collectionName: 'locales';
-    displayName: 'Locale';
+    singularName: 'owner';
+    pluralName: 'owners';
+    displayName: 'owner';
     description: '';
   };
   options: {
-    draftAndPublish: false;
-  };
-  pluginOptions: {
-    'content-manager': {
-      visible: false;
-    };
-    'content-type-builder': {
-      visible: false;
-    };
+    draftAndPublish: true;
   };
   attributes: {
-    name: Attribute.String &
-      Attribute.SetMinMax<{
-        min: 1;
-        max: 50;
-      }>;
-    code: Attribute.String & Attribute.Unique;
+    name: Attribute.String;
+    surname: Attribute.String;
+    users_permissions_user: Attribute.Relation<
+      'api::owner.owner',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    vehicles: Attribute.Relation<
+      'api::owner.owner',
+      'oneToMany',
+      'api::vehicle.vehicle'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'plugin::i18n.locale',
+      'api::owner.owner',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'plugin::i18n.locale',
+      'api::owner.owner',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiProviderProvider extends Schema.CollectionType {
+  collectionName: 'providers';
+  info: {
+    singularName: 'provider';
+    pluralName: 'providers';
+    displayName: 'provider';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    category: Attribute.Enumeration<
+      ['Taller', 'Gasolinera', 'Aseguradora', 'ITV', 'Gr\u00FAa', 'Otros']
+    >;
+    phone: Attribute.String;
+    spents: Attribute.Relation<
+      'api::provider.provider',
+      'oneToMany',
+      'api::spent.spent'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::provider.provider',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::provider.provider',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiServiceService extends Schema.CollectionType {
+  collectionName: 'services';
+  info: {
+    singularName: 'service';
+    pluralName: 'services';
+    displayName: 'service';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    spents: Attribute.Relation<
+      'api::service.service',
+      'oneToMany',
+      'api::spent.spent'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::service.service',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::service.service',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiSpentSpent extends Schema.CollectionType {
+  collectionName: 'spents';
+  info: {
+    singularName: 'spent';
+    pluralName: 'spents';
+    displayName: 'spent';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    date: Attribute.Date;
+    amount: Attribute.Decimal;
+    observations: Attribute.Text;
+    provider: Attribute.Relation<
+      'api::spent.spent',
+      'manyToOne',
+      'api::provider.provider'
+    >;
+    service: Attribute.Relation<
+      'api::spent.spent',
+      'manyToOne',
+      'api::service.service'
+    >;
+    vehicle: Attribute.Relation<
+      'api::spent.spent',
+      'manyToOne',
+      'api::vehicle.vehicle'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::spent.spent',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::spent.spent',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiVehicleVehicle extends Schema.CollectionType {
+  collectionName: 'vehicles';
+  info: {
+    singularName: 'vehicle';
+    pluralName: 'vehicles';
+    displayName: 'vehicle';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    plate: Attribute.String;
+    brand: Attribute.String;
+    model: Attribute.String;
+    registrationDate: Attribute.Date;
+    category: Attribute.String;
+    available: Attribute.Boolean;
+    owner: Attribute.Relation<
+      'api::vehicle.vehicle',
+      'manyToOne',
+      'api::owner.owner'
+    >;
+    spents: Attribute.Relation<
+      'api::vehicle.vehicle',
+      'oneToMany',
+      'api::spent.spent'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::vehicle.vehicle',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::vehicle.vehicle',
       'oneToOne',
       'admin::user'
     > &
@@ -689,10 +906,15 @@ declare module '@strapi/types' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
+      'plugin::i18n.locale': PluginI18NLocale;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'plugin::i18n.locale': PluginI18NLocale;
+      'api::owner.owner': ApiOwnerOwner;
+      'api::provider.provider': ApiProviderProvider;
+      'api::service.service': ApiServiceService;
+      'api::spent.spent': ApiSpentSpent;
+      'api::vehicle.vehicle': ApiVehicleVehicle;
     }
   }
 }

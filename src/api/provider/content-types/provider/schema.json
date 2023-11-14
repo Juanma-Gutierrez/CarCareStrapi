@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "providers",
+  "info": {
+    "singularName": "provider",
+    "pluralName": "providers",
+    "displayName": "provider",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": [
+        "Taller",
+        "Gasolinera",
+        "Aseguradora",
+        "ITV",
+        "Grúa",
+        "Otros"
+      ]
+    },
+    "phone": {
+      "type": "string"
+    },
+    "spents": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::spent.spent",
+      "mappedBy": "provider"
+    }
+  }
+}
