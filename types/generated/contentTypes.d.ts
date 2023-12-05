@@ -669,6 +669,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'oneToMany',
       'api::provider.provider'
     >;
+    vehicles: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::vehicle.vehicle'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -700,11 +705,6 @@ export interface ApiOwnerOwner extends Schema.CollectionType {
   attributes: {
     name: Attribute.String;
     surname: Attribute.String;
-    vehicles: Attribute.Relation<
-      'api::owner.owner',
-      'oneToMany',
-      'api::vehicle.vehicle'
-    >;
     users_permissions_user: Attribute.Relation<
       'api::owner.owner',
       'oneToOne',
@@ -875,15 +875,15 @@ export interface ApiVehicleVehicle extends Schema.CollectionType {
     registrationDate: Attribute.Date;
     category: Attribute.String;
     available: Attribute.Boolean;
-    owner: Attribute.Relation<
-      'api::vehicle.vehicle',
-      'manyToOne',
-      'api::owner.owner'
-    >;
     spents: Attribute.Relation<
       'api::vehicle.vehicle',
       'oneToMany',
       'api::spent.spent'
+    >;
+    users_permissions_user: Attribute.Relation<
+      'api::vehicle.vehicle',
+      'manyToOne',
+      'plugin::users-permissions.user'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;

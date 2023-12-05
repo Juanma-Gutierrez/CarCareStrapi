@@ -30,17 +30,17 @@
     "available": {
       "type": "boolean"
     },
-    "owner": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::owner.owner",
-      "inversedBy": "vehicles"
-    },
     "spents": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::spent.spent",
       "mappedBy": "vehicle"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "vehicles"
     }
   }
 }
