@@ -631,7 +631,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     username: Attribute.String &
@@ -696,15 +695,15 @@ export interface ApiOwnerOwner extends Schema.CollectionType {
   attributes: {
     name: Attribute.String;
     surname: Attribute.String;
-    users_permissions_user: Attribute.Relation<
-      'api::owner.owner',
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
     vehicles: Attribute.Relation<
       'api::owner.owner',
       'oneToMany',
       'api::vehicle.vehicle'
+    >;
+    users_permissions_user: Attribute.Relation<
+      'api::owner.owner',
+      'oneToOne',
+      'plugin::users-permissions.user'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;

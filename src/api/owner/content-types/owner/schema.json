@@ -18,17 +18,17 @@
     "surname": {
       "type": "string"
     },
-    "users_permissions_user": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "plugin::users-permissions.user",
-      "inversedBy": "owner"
-    },
     "vehicles": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::vehicle.vehicle",
       "mappedBy": "owner"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "owner"
     }
   }
 }
