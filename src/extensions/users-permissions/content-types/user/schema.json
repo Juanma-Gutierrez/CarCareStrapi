@@ -70,6 +70,12 @@
       "relation": "oneToOne",
       "target": "api::owner.owner",
       "mappedBy": "users_permissions_user"
+    },
+    "providers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::provider.provider",
+      "mappedBy": "users_permissions_user"
     }
   }
 }

@@ -664,6 +664,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'oneToOne',
       'api::owner.owner'
     >;
+    providers: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::provider.provider'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -744,6 +749,11 @@ export interface ApiProviderProvider extends Schema.CollectionType {
       'api::provider.provider',
       'oneToMany',
       'api::spent.spent'
+    >;
+    users_permissions_user: Attribute.Relation<
+      'api::provider.provider',
+      'manyToOne',
+      'plugin::users-permissions.user'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
