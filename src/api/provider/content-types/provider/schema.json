@@ -18,12 +18,12 @@
     "category": {
       "type": "enumeration",
       "enum": [
-        "Taller",
-        "Gasolinera",
-        "Aseguradora",
+        "workshop",
+        "gasStation",
+        "insuranceCompany",
         "ITV",
-        "Grúa",
-        "Otros"
+        "towTruck",
+        "other"
       ]
     },
     "phone": {

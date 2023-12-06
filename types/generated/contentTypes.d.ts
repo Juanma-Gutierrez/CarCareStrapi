@@ -742,7 +742,7 @@ export interface ApiProviderProvider extends Schema.CollectionType {
   attributes: {
     name: Attribute.String;
     category: Attribute.Enumeration<
-      ['Taller', 'Gasolinera', 'Aseguradora', 'ITV', 'Gr\u00FAa', 'Otros']
+      ['workshop', 'gasStation', 'insuranceCompany', 'ITV', 'towTruck', 'other']
     >;
     phone: Attribute.String;
     spents: Attribute.Relation<
