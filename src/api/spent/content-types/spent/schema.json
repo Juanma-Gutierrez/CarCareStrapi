@@ -27,12 +27,6 @@
       "target": "api::provider.provider",
       "inversedBy": "spents"
     },
-    "service": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::service.service",
-      "inversedBy": "spents"
-    },
     "vehicle": {
       "type": "relation",
       "relation": "manyToOne",

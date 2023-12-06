@@ -773,42 +773,6 @@ export interface ApiProviderProvider extends Schema.CollectionType {
   };
 }
 
-export interface ApiServiceService extends Schema.CollectionType {
-  collectionName: 'services';
-  info: {
-    singularName: 'service';
-    pluralName: 'services';
-    displayName: 'service';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    name: Attribute.String;
-    spents: Attribute.Relation<
-      'api::service.service',
-      'oneToMany',
-      'api::spent.spent'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::service.service',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::service.service',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface ApiSpentSpent extends Schema.CollectionType {
   collectionName: 'spents';
   info: {
@@ -828,11 +792,6 @@ export interface ApiSpentSpent extends Schema.CollectionType {
       'api::spent.spent',
       'manyToOne',
       'api::provider.provider'
-    >;
-    service: Attribute.Relation<
-      'api::spent.spent',
-      'manyToOne',
-      'api::service.service'
     >;
     vehicle: Attribute.Relation<
       'api::spent.spent',
@@ -921,7 +880,6 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::owner.owner': ApiOwnerOwner;
       'api::provider.provider': ApiProviderProvider;
-      'api::service.service': ApiServiceService;
       'api::spent.spent': ApiSpentSpent;
       'api::vehicle.vehicle': ApiVehicleVehicle;
     }
